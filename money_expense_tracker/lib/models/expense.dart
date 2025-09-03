@@ -1,35 +1,35 @@
 class Expense {
   final int? id;
-  final double amount;
   final String category;
+  final double amount;
   final String note;
-  final String date;
+  final DateTime date; // ✅ Use DateTime instead of String
 
   Expense({
     this.id,
-    required this.amount,
     required this.category,
+    required this.amount,
     required this.note,
     required this.date,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'amount': amount,
-      'category': category,
-      'note': note,
-      'date': date,
-    };
-  }
-
   factory Expense.fromMap(Map<String, dynamic> map) {
     return Expense(
       id: map['id'],
-      amount: map['amount'],
       category: map['category'],
+      amount: map['amount'],
       note: map['note'],
-      date: map['date'],
+      date: DateTime.parse(map['date']), // ✅ Convert String → DateTime
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'category': category,
+      'amount': amount,
+      'note': note,
+      'date': date.toIso8601String(), // ✅ Store as String
+    };
   }
 }
